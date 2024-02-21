@@ -1,14 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace AppKiller
 {
     internal class Program
     {
-        static void Main(string[] args)
+        async static void Main(string[] args)
         {
             var processesNames = new string[]
             {
@@ -16,17 +18,23 @@ namespace AppKiller
                 "steam"
             };
             while (true)
-            {                
-                foreach (var process in Process.GetProcesses())
-                {
-                    if (processesNames.Contains(process.ProcessName))
-                    {
-                        process.Kill();
-
-                    }
-                }
-                Thread.Sleep(new TimeSpan(0, 1, 0));
+            {
+                await KillProcessesByName(Process.GetProcesses(), processesNames);
             }
+        }
+
+        async static Task KillProcessesByName(
+            IEnumerable<Process> processes,
+            IEnumerable<string> processesNames)
+        {
+
+
+            foreach (var process in processes)
+            {
+                if (processesNames.Contains(process.ProcessName))
+                    process.Kill();
+            }
+            Thread.Sleep(new TimeSpan(0, 1, 0));
         }
     }
 }
