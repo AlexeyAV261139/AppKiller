@@ -5,14 +5,14 @@ using System.Threading.Tasks;
 
 namespace AppKiller
 {
-    public class ProcessManager
+    public class ProcessController
     {
         public string ProcessName { get; private set; }
 
         private ProcessLiveTimeChecker _timeChecker;
         private TimeSpan _optimalCheckDelay;
 
-        public ProcessManager(string processName, TimeSpan timeLimit)
+        public ProcessController(string processName, TimeSpan timeLimit)
         {
             ProcessName = processName;
             _timeChecker = new ProcessLiveTimeChecker(timeLimit, processName);
@@ -30,8 +30,7 @@ namespace AppKiller
                         Process.GetProcessesByName(ProcessName).FirstOrDefault()?.Kill();
 
                     await Task.Delay(_optimalCheckDelay);
-                }
-               
+                }               
             }
             catch { }
         }

@@ -7,7 +7,7 @@ namespace AppKiller
     {
         async static Task Main(string[] args)
         {
-            var processManager = new ProcessManager("Steam", new TimeSpan(0, 0, 5));
+            var processManager = new ProcessController("Steam", new TimeSpan(0, 0, 5));
             _ = processManager.StartTracking();
             Console.ReadKey();
         }
